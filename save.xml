@@ -1,12 +1,1 @@
-<node name="a" >
-    <node name="b1">
-        <node name="c1">
-            <node name="d1">
-
-            </node>
-        </node>
-    </node>
-    <node name="b2">
-
-    </node>
-</node>
+<data><node name="root" info=""><node name="a" info="asd"><node name="b" info="a" /><node name="c" info="aasd" /></node></node></data>
