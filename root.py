@@ -125,30 +125,35 @@ class Node:
 
 
 def run():
+    # 視窗初始化
     windows_size = (800, 600)
     pygame.init()
     window_surface = pygame.display.set_mode(windows_size)
     pygame.display.set_caption("root")
     window_surface.fill((255, 255, 255))
-
-    main_node = Node(window_surface, [400,300],  "root")
+    # 節點初始化
+    main_node = Node(window_surface, [400,300],  "start")
 
     pygame.display.update()
     while True:
         window_surface.fill((255, 255, 255))
 
+        # 獲取鍵盤、滑鼠、視窗等資訊
         t = {}
         for e in pygame.event.get():
             t[e.type] = e
 
+        # 判斷是否關閉視窗
         if QUIT in t:
             pygame.quit()
             break
 
+        # 判斷是否點擊
         click = False
         if MOUSEBUTTONUP in t:
             click = True
 
+        # 獲取鍵盤輸入
         key = False
         if KEYDOWN in t:
             if (ord("0") <= t[KEYDOWN].key <= ord("9")) or \
@@ -158,14 +163,18 @@ def run():
             elif t[KEYDOWN].key == pygame.K_BACKSPACE:
                 key = "del"
 
+        # 更新節點
         main_node.update(click=click, key=key)
+        # 更新視窗
         pygame.display.update()
+
 
     file = "save.xml"
     tree = ET.parse(file)
     root = tree.parse(file)
     root.clear()
 
+    # 使用廣度優先儲存節點資訊
     que = [(root,main_node)]
     while que:
         pre,now = que.pop(0)

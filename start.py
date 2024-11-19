@@ -33,3 +33,4 @@ while True:
     user.update(click=click)
 
     pygame.display.update()
+

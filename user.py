@@ -61,6 +61,7 @@ class Node:
 
 
 def run():
+    # 深度優先建構樹
     def build(node: Node, n=1):
         for i, child in enumerate(node.element):
             new_node = Node(window_surface, child, [node.pos[0] + n * 100, node.pos[1] + i * 100])
@@ -68,24 +69,32 @@ def run():
             node.next.append(new_node)
             build(new_node, n)
         n += 1
+
+    # 初始化視窗
     windows_size = (800, 600)
     pygame.init()
     window_surface = pygame.display.set_mode(windows_size)
     pygame.display.set_caption("user")
     window_surface.fill((255, 255, 255))
 
+    # 導入檔案
     file = "save.xml"
     tree = ET.parse(file)
     root = tree.parse(file)[0]
 
+    # 初始位置
     pos = [100, 300]
 
+    # 初始化節點
     main_node = Node(window_surface, root, pos)
     build(main_node)
-    t1 = time.time()
 
+
+    t1 = time.time()
     while 1:
         window_surface.fill((255, 255, 255))
+
+        # 更新樹
         t2 = time.time()
         if t2-t1 > 10:
             t1 = t2
@@ -114,8 +123,11 @@ def run():
             elif t[KEYDOWN].key == pygame.K_BACKSPACE:
                 key = "del"
 
+        # 更新節點
         main_node.update(click=click, key=key)
+        # 更新視窗
         pygame.display.update()
+        # 儲存檔案
         tree.write(file)
     sys.exit()
 
